@@ -9,7 +9,7 @@ function Chicago() {
       <div className="hero-content">
         <h1>Little Lemon</h1>
         <h3>Chicago</h3>
-        <p style={{width:'400px'}}>We are a family owned Mediterranean restuarant, focused on tradtitonal recipies with a modern twist .</p>
+        <p style={{width:'minmax(auto,400px)'}}>We are a family owned Mediterranean restuarant, focused on tradtitonal recipies with a modern twist .</p>
         <Link to='/reserve'>
         <button className="cta-button">Reserve a Table</button>
         </Link>

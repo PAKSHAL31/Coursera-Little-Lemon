@@ -1,34 +1,99 @@
+/* General styles for navbar */
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: white;
-    padding: 1rem 2rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.logo img {
+  height: 40px; /* Adjust as necessary */
+}
+
+.nav-links {
+  list-style-type: none;
+  display: flex;
+  gap: 2rem;
+  text-transform: uppercase;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: black;
+  transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+  color: #ff6347;
+  background-color: yellow;
+}
+
+/* Hide the menu on smaller screens */
+.hamburger {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+/* Mobile menu styles */
+.nav-links-container {
+  display: flex;
+}
+
+@media (max-width: 768px) {
   .nav-links {
-    list-style-type: none;
-    display: flex;
-    gap: 2rem;
+    position: absolute;
+    right: 0;
+    flex-direction: column;
+    background-color: white;
+    width: 100%;
+    height: 0;
+    overflow: hidden;
+    transition: height 0.3s ease;
   }
-  
+
+  .nav-links-container.open .nav-links {
+    height: auto;
+    padding: 1rem 0;
+  }
+
   .nav-links li {
-    text-transform: uppercase;
+    padding: 1rem 0;
+    text-align: center;
   }
-  
-  .nav-links a {
-    text-decoration: none;
+
+  .hamburger {
+    display: block;
+  }
+
+  /* When the menu is open */
+  .nav-links-container.open {
+    display: block;
+  }
+}
+
+/* Hamburger icon styles */
+.hamburger {
+  display: none;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
+  .close {
+    font-size: 2rem;
     color: black;
-    transition: color 0.3s ease;
   }
-  
-  .nav-links a:hover {
-    color: #ff6347;
-    background-color: yellow;
+
+  .open {
+    font-size: 2rem;
+    color: black;
   }
+}
+

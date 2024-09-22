@@ -1,24 +1,41 @@
 import React from 'react';
 import './Navbar.css';
 import { Link } from 'react-router-dom';
+import logo from '../../Assets/Logo.svg';
+import { useState } from 'react';
 function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <div>
-      <nav className="navbar">
-      <div className="logo">
-        Little Lemon
-      </div>
-      <ul className="nav-links">
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/about">About</Link></li>
-        <li><Link to="/reserve">Reservations</Link></li>
-        <li><Link to="/menu">Menu</Link></li>
-        <li><Link to="/orderonline">Order Online</Link></li>
-        <li><Link to="/login">Login</Link></li>
-        </ul>
-        </nav>
+      <nav className="navbar" style={{zIndex:'3'}}>
+        <div className="logo">
+          <img src={logo} alt="Logo" />
+        </div>
+        <div className={`nav-links-container ${isOpen ? 'open' : ''}`}>
+          <ul className="nav-links">
+            <li><Link to="/" onClick={toggleMenu}>Home</Link></li>
+            <li><Link to="/about" onClick={toggleMenu}>About</Link></li>
+            <li><Link to="/reserve" onClick={toggleMenu}>Reservations</Link></li>
+            <li><Link to="/menu" onClick={toggleMenu}>Menu</Link></li>
+            <li><Link to="/orderonline" onClick={toggleMenu}>Order Online</Link></li>
+            <li><Link to="/login" onClick={toggleMenu}>Login</Link></li>
+          </ul>
+        </div>
+        <div className="hamburger" onClick={toggleMenu}>
+          {isOpen ? (
+            <span className="close">&times;</span>
+          ) : (
+            <span className="open">&#9776;</span>
+          )}
+        </div>
+      </nav>
     </div>
-  )
+  );
 }
 
 export default Navbar
