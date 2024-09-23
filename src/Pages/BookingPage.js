@@ -1,37 +1,77 @@
-import React from 'react'
+import React, { useReducer, useEffect } from 'react';
 import BookingForm from '../Components/BookingForm/BookingForm';
-import { useReducer } from 'react';
-import BookingSlot from '../Components/BookingForm/BookingSlot';
-const initialState = ['17:00', '18:00', '19:00', '20:00', '21:00', '22:00'];
+const initialState = [];
 
 const timesReducer = (state, action) => {
   switch (action.type) {
-    case 'UPDATE_TIMES':
-      return initialState; // Update this to return different times based on the date
+    case 'SET_TIMES':
+      return action.payload;
     default:
       return state;
   }
 };
 
 function BookingPage() {
-  
-const [availableTimes, dispatch] = useReducer(timesReducer, initialState);
+  const seededRandom = function (seed) {
+    var m = 2**35 - 31;
+    var a = 185852;
+    var s = seed % m;
+    return function () {
+        return (s = s * a % m) / m;
+    };
+}
 
-const updateTimes = (selectedDate) => {
-  dispatch({ type: 'UPDATE_TIMES', date: selectedDate });
+const fetchAPI = function(date) {
+    let result = [];
+    let random = seededRandom(date.getDate());
+
+    for(let i = 17; i <= 23; i++) {
+        if(random() < 0.5) {
+            result.push(i + ':00');
+        }
+        if(random() < 0.5) {
+            result.push(i + ':30');
+        }
+    }
+    return result;
 };
+const submitAPI = function(formData) {
+    return true;
+};
+  
+  const [availableTimes, dispatch] = useReducer(timesReducer, initialState);
+
+
+  // Fetch available times for today's date
+  const initializeTimes = async () => {
+    const today = new Date();// Format as YYYY-MM-DD
+    const times = await fetchAPI(today); // Call the API
+    dispatch({ type: 'SET_TIMES', payload: times });
+  };
+
+  // Update available times based on selected date
+  const updateTimes = async (selectedDate) => {
+    const times = await fetchAPI(new Date(selectedDate)); // Call the API
+    dispatch({ type: 'SET_TIMES', payload: times });
+  };
+
+  
+    function submitForm (formData) {
+        if (submitAPI(formData)) {
+            //navigate("/confirmed")
+            console.log("Submitted")
+        }
+    }
+  // Initialize times on component mount
+  useEffect(() => {
+    initializeTimes();
+  }, []);
+
   return (
-    
     <div>
-      <BookingForm availableTimes={availableTimes} updateTimes={updateTimes} />
-      <div className="booking-slots">
-        <h2>Available Booking Slots:</h2>
-        {availableTimes.map((time, index) => (
-          <BookingSlot key={index} time={time} />
-        ))}
-      </div>
+      <BookingForm availableTimes={availableTimes} updateTimes={updateTimes} submitForm={submitForm} />
     </div>
-  ) 
+  );
 }
 
 export default BookingPage;

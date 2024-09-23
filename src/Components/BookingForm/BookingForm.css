@@ -1,74 +1,126 @@
 /* BookingForm.css */
 
 .booking-form {
-    display: grid;
-    gap: 20px;
-    margin: 5px auto;
-    grid-template-columns: repeat(2, 1fr);
+  display: grid;
+  gap: 20px;
+  margin: 5px auto;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* Flex container for label and input */
+.booking-form .form-group {
+  display: flex;
+  align-items: center;
+  margin: 15px auto;
+}
+
+.booking-form label {
+  font-size: 1.2rem;
+  font-weight: bold;
+  flex: 1;
+  color: #333;
+}
+
+.booking-form input,
+.booking-form select {
+  font-size: 1.1rem;
+  padding: 0.6rem;
+  border: 1px solid #aaa;
+  border-radius: 8px;
+  flex: 2;
+  margin:10px;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.booking-form input:focus,
+.booking-form select:focus {
+  border-color: #fcc034;
+  box-shadow: 0 0 10px rgba(252, 192, 52, 0.5);
+}
+
+/* Style for icons */
+.input-icon {
+  margin-right: 10px;
+  color: #333;
+}
+
+.booking-form input[type="submit"] {
+  background-color: #fcc034;
+  color: black;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  width: fit-content;
+  margin: 20px auto;
+}
+
+.booking-form input[type="submit"]:hover {
+  background-color: #e6b500;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .booking-form {
+    grid-template-columns: 0.8fr;
+    justify-content: center;
   }
-  
-  /* Flex container for label and input */
+
   .booking-form .form-group {
-    display: flex;
-    align-items: center; /* Aligns items vertically centered */
-    margin: 15px auto;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0;
   }
-  
+
   .booking-form label {
-    font-size: 1.2rem; /* Increase font size of labels */
-    flex: 1; /* Allow label to take available space */
+    margin-bottom: 0.5rem;
   }
-  
+
   .booking-form input,
   .booking-form select {
-    font-size: 1.2rem; /* Increase font size of inputs */
-    padding: 0.5rem; /* Add padding for better touch targets */
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    flex: 2; /* Allow inputs to take available space */
-    margin-left: 10px; /* Space between label and input */
+    width: 100%;
+    margin:5px;
   }
-  
-  /* Style for icons */
-  .input-icon {
-    margin-right: 10px; /* Space between icon and input */
-  }
-  
-  .booking-form input[type="submit"] {
-    background-color: #fcc034;
-    color: black;
-    border: none;
-    padding: 0.75rem;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.2rem; /* Increase font size of submit button */
-    grid-column: span 2; /* Make the submit button span both columns */
-  }
-  
-  .booking-form input[type="submit"]:hover {
-    background-color: #e6b500;
-  }
-  
-  /* Responsive Styles */
-  @media (max-width: 768px) {
-    .booking-form {
-        grid-template-columns: 1fr; /* One column on mobile */
-      }
-    
-      .booking-form .form-group {
-        flex-direction: column; /* Stack label and input vertically */
-        align-items: flex-start; /* Align items to the start */
-        margin: 0; /* Remove margin for better spacing */
-      }
-    
-      .booking-form label {
-        margin-bottom: 0.5rem; /* Space between label and input */
-      }
-    
-      .booking-form input,
-      .booking-form select {
-        width: 100%; /* Full width for mobile */
-        margin-left: 0; /* Remove margin on mobile */
-      }
-  }
-  
+}
+
+/* Modal Styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.modal-content button {
+  background-color: #fcc034;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.modal-content button:hover {
+  background-color: #e6b500;
+}

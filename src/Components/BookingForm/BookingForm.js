@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import './BookingForm.css';
-import { FaCalendar, FaClock, FaUser, FaGift } from 'react-icons/fa'; // Import icons
-
-function BookingForm({availableTimes, updateTimes}) {
+import { FaCalendar, FaClock, FaUser, FaGift } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+function BookingForm({ availableTimes, updateTimes,submitForm }) {
   const [formData, setFormData] = useState({
     date: '',
     time: '',
     guests: 1,
     occasion: 'Birthday',
   });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate(); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,18 +20,33 @@ function BookingForm({availableTimes, updateTimes}) {
     });
 
     if (name === 'date') {
-        updateTimes(value);
-      }
+      updateTimes(value);
+    }
   };
 
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Reservation Data:', formData);
+    submitForm(formData);
+    setIsModalOpen(true); 
+  };
+
+  const closeModalAndRedirect = () => {
+    setIsModalOpen(false);
+    navigate('/'); // Redirect to homepage
   };
 
   return (
-    <form className="booking-form" onSubmit={handleSubmit}>
+    <>
+    {isModalOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2>Booking Confirmed</h2>
+            <p>Your table has been successfully booked!</p>
+            <button onClick={closeModalAndRedirect}>Ok</button>
+          </div>
+        </div>
+      )}
+    {!isModalOpen && (<form className="booking-form" onSubmit={handleSubmit}>
       <div className="form-group">
         <label htmlFor="date">
           <FaCalendar className="input-icon" />
@@ -41,7 +58,8 @@ function BookingForm({availableTimes, updateTimes}) {
           name="date" 
           value={formData.date} 
           onChange={handleChange} 
-          required 
+          required
+          aria-label="Choose date" 
         />
       </div>
 
@@ -96,9 +114,12 @@ function BookingForm({availableTimes, updateTimes}) {
         </select>
       </div>
 
-      <input type="submit" value="Make Your Reservation" />
-    </form>
-  );
+      <input type="submit" value="Make Your Reservation" aria-label="Submit reservation"/>
+    </form>)}
+  
+    
+      </>
+);
 }
 
 export default BookingForm;
